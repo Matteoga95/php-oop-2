@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/cat.php';
+require_once __DIR__ . '/category.php';
 require __DIR__ . '/type.php';
 
 
