@@ -4,7 +4,7 @@ require_once __DIR__ . '/category.php';
 require __DIR__ . '/type.php';
 
 
-class product extends Type
+class Product extends Type
 {
 
     public string $title;

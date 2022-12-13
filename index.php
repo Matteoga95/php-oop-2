@@ -1,17 +1,46 @@
 <?php
 
-require __DIR__ . '/product.php';
-
-$croccantini = new product("cibo", 8, "Royal canin", "royal cane.jpeg", new Category(true));
-
-$cucciaRosa = new product("Cucce", 24.99, "Cuccia Rosa Morbida", "cuccia rosa.jpg", new Category(false));
-
-$tiragraffi = new product("Giochi", 18.49, "Tiragraffi blu per gatto", "tiragraffi.jpg", new Category(false));
+require __DIR__ . '/Models/product.php';
+require __DIR__ . '/Models/CreditCard.php';
+require __DIR__ . '/Models/Customer.php';
 
 
 
 
+$croccantini = new Product("cibo", 8, "Royal canin", "royal cane.jpeg", new Category(true));
 
+$cucciaRosa = new Product("Cucce", 24.99, "Cuccia Rosa Morbida", "cuccia rosa.jpg", new Category(false));
+
+$tiragraffi = new Product("Giochi", 18.49, "Tiragraffi blu per gatto", "tiragraffi.jpg", new Category(false));
+
+//creo l'utente
+$user = new Customer("matteo", "matteo95@gmial.com", "via giulio della torre 40");
+//gli faccio aggiungere un prodotto
+$user->addProduct($croccantini);
+//gli faccio aggiungere un prodotto
+$user->addProduct($cucciaRosa);
+//gli faccio aggiungere un prodotto
+$user->addProduct($tiragraffi);
+
+//calcolo il totale del carrello
+$totale = $user->GetTotal($user->ShopBasket);
+
+//inserisco la carta di credito
+$user->insertCreditCard(new CreditCard("1234567891", "366", "10", "2020", 430));
+
+
+//in base alla carta definita sopra faccio il pagamento e genero eccezione se la carta è scaduta, in questo caso è scaduta
+//altrimenti toglie il totale dal balance della carta
+try {
+    $user->makePayment($totale);
+    var_dump($user->paymentMethod->balance);
+} catch (Exception $e) {
+    var_dump($e);
+}
+
+
+// var_dump($totale);
+// var_dump($user);
 
 
 // var_dump($croccantini);
